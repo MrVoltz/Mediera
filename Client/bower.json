@@ -1,0 +1,29 @@
+{
+  "name": "Mediera-Client",
+  "homepage": "https://github.com/MrVoltz/Mediera",
+  "authors": [
+    "Martin P <martin@placka.(none)>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "jquery": "^2.2.1",
+    "moment": "^2.11.2"
+  }
+}
