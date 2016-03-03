@@ -37,9 +37,58 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 	$scope.activeSubItem = $scope.activeMenuItem.subMenu ? $scope.activeMenuItem.subMenu[0] : null;
 
 	$scope.setMenuItem = function(item, subItem) {
-		$scope.activeMenuItem = item;
+		if(item)
+			$scope.activeMenuItem = item;
 		$scope.activeSubItem = subItem || ($scope.activeMenuItem.subMenu ? $scope.activeMenuItem.subMenu[0] : null);
 	};
+
+	$scope.$on("control", function(e, key) {
+		var itemIndex = $scope.menuItems.indexOf($scope.activeMenuItem),
+			newIndex, subItemIndex;
+
+		switch(key) {
+			case "left":
+				newIndex = itemIndex - 1;
+				if(newIndex < 0)
+					newIndex = $scope.menuItems.length - 1;
+				
+				$scope.setMenuItem($scope.menuItems[newIndex]);
+				$scope.$apply();
+				break;
+			case "right":
+				newIndex = itemIndex + 1;
+				if(newIndex === $scope.menuItems.length)
+					newIndex = 0;
+
+				$scope.setMenuItem($scope.menuItems[newIndex]);
+				$scope.$apply();
+				break;
+			case "up":
+				if(!$scope.activeMenuItem.subMenu)
+					break;
+
+				subItemIndex = $scope.activeMenuItem.subMenu.indexOf($scope.activeSubItem);
+				newIndex = subItemIndex + 1;
+				if(newIndex === $scope.activeMenuItem.subMenu.length)
+					newIndex = 0;
+
+				$scope.setMenuItem(null, $scope.activeMenuItem.subMenu[newIndex]);
+				$scope.$apply();
+				break;
+			case "down":
+				if(!$scope.activeMenuItem.subMenu)
+					break;
+
+				subItemIndex = $scope.activeMenuItem.subMenu.indexOf($scope.activeSubItem);
+				newIndex = subItemIndex - 1;
+				if(newIndex < 0)
+					newIndex = $scope.activeMenuItem.subMenu.length - 1;
+
+				$scope.setMenuItem(null, $scope.activeMenuItem.subMenu[newIndex]);
+				$scope.$apply();
+				break;
+		}
+	});
 }]);
 
 mainMenu.directive("menuBarSlider", ["$timeout", "$window", function($timeout, $window) {
