@@ -3,7 +3,6 @@ var movieView = angular.module('movieView', []);
 movieView.directive("movieView", function() {
 	return {
 		restrict: "C",
-		templateUrl: "layers/movie-view/movie-view.html",
 		controller: "MovieViewCtrl",
 		link: function(scope, element, attrs) {
 			var $layer = angular.element(element);

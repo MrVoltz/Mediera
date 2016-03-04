@@ -1,12 +1,5 @@
 var topBar = angular.module('topBar', []);
 
-topBar.directive("topBar", function() {
-	return {
-		restrict: "C",
-		templateUrl: "layers/top-bar/top-bar.html"
-	};
-});
-
 topBar.directive("time", ["$interval", function($interval) {
 	return {
 		template: "{{ time }}",

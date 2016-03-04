@@ -3,7 +3,6 @@ var mainMenu = angular.module('mainMenu', []);
 mainMenu.directive("mainMenu", function() {
 	return {
 		restrict: "C",
-		templateUrl: "layers/main-menu/main-menu.html",
 		controller: "MainMenuCtrl"
 	};
 });

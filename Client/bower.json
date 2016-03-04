@@ -20,10 +20,8 @@
   ],
   "dependencies": {
     "angular": "^1.5.0",
-    "angular-route": "^1.5.0",
-    "angular-resource": "^1.5.0",
-    "angular-animate": "^1.5.0",
     "jquery": "^2.2.1",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "underscore": "^1.8.3"
   }
 }
