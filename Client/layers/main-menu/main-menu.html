@@ -1,8 +1,8 @@
 <div class="menu-bar no-transition" menu-bar-slider>
 	<hr>
 	<ul class="menu">
-		<li class="menu-item" ng-repeat="item in menuItems" ng-class="{ 'next-active': activeMenuItem === item }"><a href="#!/{{ item.urlSlug }}" ng-click="setMenuItem(item)" menu-bar-item>{{ item.text }}</a><ul class="sub-menu" ng-if="item.subMenu !== null">
-			<li class="sub-menu-item" ng-repeat="subItem in item.subMenu | reverse" ng-class="{ 'active': activeMenuItem === item &amp;&amp; activeSubItem === subItem }"><a href="#!/{{ item.urlSlug }}/{{ subItem.urlSlug }}" ng-click="setMenuItem(item, subItem)" menu-bar-sub-item>{{ subItem.text }}</a></li>
+		<li class="menu-item" ng-repeat="item in menuItems" ng-class="{ 'next-active': activeMenuItem === item }"><a href="#/{{ item.urlSlug }}" menu-bar-item>{{ item.text }}</a><ul class="sub-menu" ng-if="item.subMenu !== null">
+			<li class="sub-menu-item" ng-repeat="subItem in item.subMenu | reverse" ng-class="{ 'active': activeMenuItem === item &amp;&amp; activeSubItem === subItem }"><a href="#/{{ item.urlSlug }}/{{ subItem.urlSlug }}" menu-bar-sub-item>{{ subItem.text }}</a></li>
 		</ul></li>
 	</ul>
 </div>

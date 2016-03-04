@@ -17,4 +17,13 @@ body {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
+
+	transition: opacity .5s linear 0s;
+	opacity: 0;
+
+}
+
+.layer.active {
+	transition: opacity .5s linear .5s;
+	opacity: 1;
 }

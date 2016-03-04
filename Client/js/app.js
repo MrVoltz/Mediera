@@ -7,19 +7,40 @@ var medieraApp = angular.module('medieraApp', [
   'movieView'
 ]);
 
-medieraApp.config(function() {
-	document.title = "Mediera";
-});
+var $baseScope;
 
-medieraApp.directive("body", ["$window", function($window) {
+medieraApp.config(['$routeProvider', function($routeProvider) {
+	$routeProvider
+		.when("/movie",{template:function() {
+			$baseScope.activeLayers = [ "player", "movie-view", "top-bar" ];
+			$baseScope.controlLayer = "movie-view";
+			$baseScope.title = "Informace o filmu";
+		}})
+		.otherwise({template: function() {
+			$baseScope.activeLayers = [ "player", "main-menu", "top-bar" ];
+			$baseScope.controlLayer = "main-menu";
+			$baseScope.title = "Hlavní menu";
+		}});
+}]);
+
+medieraApp.controller("BaseCtrl",  ['$scope', '$window', function($scope, $window) {
+	$scope.controlLayer = "main-menu";
+	$scope.activeLayers = [];
+	$scope.title = "";
+
+	$baseScope = $scope;
+}]);
+
+medieraApp.directive("body", ["$window", "$document", function($window, $document) {
 	return {
 		restrict: "E",
 		controller: "BaseCtrl",
 		link: function(scope, element, attrs) {
+			$document.title = "Mediera";
 
 			/* keyboard controls, TODO: move to another file and prepare for another input methods */
 			angular.element($window).on("keyup", function(e) {
-				var $activeScope = angular.element("." + scope.activeLayer).scope();
+				var $activeScope = angular.element("." + scope.controlLayer).scope();
 
 				switch(e.which) {
 					case 37:
@@ -49,14 +70,20 @@ medieraApp.directive("body", ["$window", function($window) {
 	};
 }]);
 
-medieraApp.controller("BaseCtrl",  ['$scope', '$window', function($scope, $window) {
-	$scope.activeLayer = "main-menu";	
-}]);
-
 medieraApp.directive("layer", ["$window", function($window) {
 	return {
 		restrict: "C",
 		scope: true,
-		priority: 1000
+		priority: 1000,
+		link: function(scope, element, attrs) {
+			scope.layerName = angular.element(element).attr("class").split(" ")[1];
+
+			scope.$watch("activeLayers", function() {
+				if(scope.activeLayers.indexOf(scope.layerName) !== -1)
+					angular.element(element).addClass("active");
+				else
+					angular.element(element).removeClass("active");
+			});
+		}
 	};
 }]);

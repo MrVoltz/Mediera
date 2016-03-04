@@ -4,15 +4,17 @@ movieView.directive("movieView", function() {
 	return {
 		restrict: "C",
 		templateUrl: "layers/movie-view/movie-view.html",
-		controller: "MovieViewCtrl"
+		controller: "MovieViewCtrl",
+		link: function(scope, element, attrs) {
+			var $layer = angular.element(element);
+
+			$layer.find(".poster").one("load", function() {
+				$layer.find(".rating").width($layer.find(".poster").outerWidth());
+				$layer.find(".menu").width($layer.find(".container").outerWidth());
+			});			
+		}
 	};
 });
-
-movieView.directive("movieViewModal", ["$timeout", function($timeout) {
-	return function(scope, element, attrs) {
-		
-	};
-}]);
 
 movieView.controller("MovieViewCtrl", ['$scope', function($scope) {
 	$scope.menuItems = [
@@ -28,7 +30,31 @@ movieView.controller("MovieViewCtrl", ['$scope', function($scope) {
 
 	$scope.activeMenuItem = $scope.menuItems[0];
 
-	$scope.$on("keypress", function(e) {
-		console.log("event received inside MovieViewCtrl");
+	$scope.setMenuItem = function(item) {
+		$scope.activeMenuItem = item;
+	};
+
+	$scope.$on("control", function(e, key) {
+		var itemIndex = $scope.menuItems.indexOf($scope.activeMenuItem),
+			newIndex;
+
+		switch(key) {
+			case "left":
+				newIndex = itemIndex - 1;
+				if(newIndex < 0)
+					break;
+				
+				$scope.setMenuItem($scope.menuItems[newIndex]);
+				$scope.$apply();
+				break;
+			case "right":
+				newIndex = itemIndex + 1;
+				if(newIndex === $scope.menuItems.length)
+					break;
+
+				$scope.setMenuItem($scope.menuItems[newIndex]);
+				$scope.$apply();
+				break;
+		}
 	});
 }]);

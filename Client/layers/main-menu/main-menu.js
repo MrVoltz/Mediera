@@ -12,23 +12,27 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 	$scope.menuItems = [
 		{
 			text: "Knihovna",
-			urlSlug: "knihovna",
+			urlSlug: "library",
 			subMenu: [
 				{
 					text: "Dle názvu",
-					urlSlug: "dle-nazvu"
+					urlSlug: "by-name"
 				}, {
 					text: "Hledat",
-					urlSlug: "hledat"
+					urlSlug: "search"
 				}
 			]
 		}, {
 			text: "Aplikace",
-			urlSlug: "aplikace",
+			urlSlug: "apps",
 			subMenu: null
 		}, {
 			text: "Nastavení",
-			urlSlug: "nastaveni",
+			urlSlug: "settings",
+			subMenu: null
+		}, {
+			text: "Film",
+			urlSlug: "movie",
 			subMenu: null
 		}
 	];
@@ -44,7 +48,7 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 
 	$scope.$on("control", function(e, key) {
 		var itemIndex = $scope.menuItems.indexOf($scope.activeMenuItem),
-			newIndex, subItemIndex;
+			newIndex, subItemIndex, newUrl;
 
 		switch(key) {
 			case "left":
@@ -86,6 +90,12 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 
 				$scope.setMenuItem(null, $scope.activeMenuItem.subMenu[newIndex]);
 				$scope.$apply();
+				break;
+			case "enter":
+				if($scope.activeSubItem)
+					$scope.activeSubItem.$el.click();
+				else
+					$scope.activeMenuItem.$el.click();
 				break;
 		}
 	});

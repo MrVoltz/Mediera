@@ -1,4 +1,4 @@
-<div class="modal" movie-view-modal>
+<div class="modal">
 	<img class="poster" src="layers/movie-view/stub-poster.jpg">
 	<div class="container">
 		<h1>Vykoupení z věznice Shawshank</h1>
@@ -21,8 +21,12 @@
 			<li><span class="percentage">89 %</span><span class="site">IMDb</span></li>
 		</ul>
 		<ul class="menu">
-			<li class="active"><a href="#">Přehrát</a></li>
-			<li><a href="#">Stáhnout</a></li>
+			<li ng-repeat="item in menuItems" ng-class="{ active: activeMenuItem === item }"><a href="#">{{ item.text }}</a></li>
 		</ul>
 	</div>
 </div>
+
+<div class="searching-sources">
+	<img class="preloader" src="img/preloader-128.gif">
+	<h2>Prohledávám zdroje...</h2>
+</div>ů
