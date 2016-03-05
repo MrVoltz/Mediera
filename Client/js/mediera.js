@@ -1,4 +1,4 @@
-var Mediera = {};
+var Mediera = window.Mediera = window.M = {};
 
 Mediera.KeyboardAdapter = {
 	_keyMap: {
@@ -15,82 +15,38 @@ Mediera.KeyboardAdapter = {
 		$(window).on("keyup", function(e) {
 			if(_keyMap[e.which]) {
 				e.preventDefault();
-				Mediera.InputManager.sendControlEvent(_keyMap[e.which]);
+				M.InputManager.sendControlEvent(_keyMap[e.which]);
 			}
 		});
 	}
 };
 
-Mediera.Routes = {
-	"movie": {
-		layers: [ "player", "movie-view", "top-bar" ],
-		controlLayer: "movie-view",
-		title: "Informace o filmu"
-	},
-
-	"index": {
-		layers: [ "player", "main-menu", "top-bar" ],
-		controlLayer: "main-menu",
-		title: "Hlavní menu"
-	}
-};
-
 Mediera.InputManager = {};
 Mediera.InputManager.sendControlEvent = function(id) {
-	Mediera.getControlScope().$broadcast("control", id);
+	M.RouterUtils.getControlScope().$broadcast("control", id);
 };
 
-Mediera.Router = {
-	routeTo: function(id, args, qs) {
-		if(!Mediera.Routes[id])
-			id = "index";
+Mediera.Layers = {};
 
-		var route = Mediera.Routes[id],
-			$scope = Mediera.$scope;
-
-		$scope.activeLayers = route.layers;
-		$scope.controlLayer = route.controlLayer;
-		$scope.title = _.isFunction(route.title) ? route.title() : route.title;
-	},
-
-	route: function(hash) {
-		if(hash.charAt(0) === "#")
-			hash = hash.substring(1);
-		if(hash.charAt(0) === "/")
-			hash = hash.substring(1);
-
-		var parts = hash.split("?"),
-			qs = parts[1] ? parts[1] : "";
-		parts = parts[0].trim().split("/");
-
-		this.routeTo(parts[0], parts.slice(1), qs.split("&").map(function(a) {
-			return a.split("=");
-		}));
-	},
-
-	init: function() {
-		$(window).on("hashchange", function() {
-			Mediera.Router.route(location.hash);
-		});
-		Mediera.Router.route(location.hash);
+Mediera.addLayerCtrl = function(module, ctrl) {
+	function ucFirst(str) {
+		return str.charAt(0).toUpperCase() + str.substring(1);
 	}
-};
 
-Mediera.getControlScope = function() {
-	return angular.element(".layer." + this.$scope.controlLayer).scope();
+	var ctrlName = ucFirst(module.name) + "Ctrl",
+		dirName = module.name;
+
+	module.controller(ctrlName, ctrl);
 };
 
 Mediera.init = function($scope) {
 	this.$scope = $scope;
+	this.$state = $scope.$state;
+	this.$stateParams = $scope.$stateParams;
 
 	console.info("Initializing...");
 
-	this.$scope.controlLayer = "main-menu";
-	this.$scope.activeLayers = [ "player", "main-menu", "top-bar" ];
-	this.$scope.title = "";
+	M.KeyboardAdapter.init();
 
-	document.title = "Mediera";
-
-	Mediera.KeyboardAdapter.init();
-	Mediera.Router.init();
+	this.$scope.title = "Mediera";
 };

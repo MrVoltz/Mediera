@@ -18,12 +18,16 @@ body {
 	width: 100vw;
 	height: 100vh;
 
-	transition: opacity .5s linear 0s;
+	transition: opacity .35s linear 0s;
 	opacity: 0;
 
 }
 
 .layer.active {
-	transition: opacity .5s linear .5s;
+	transition: opacity .35s linear .35s;
 	opacity: 1;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }

@@ -1,5 +1,7 @@
 var topBar = angular.module('topBar', []);
 
+Mediera.addLayerCtrl(topBar, function() {});
+
 topBar.directive("time", ["$interval", function($interval) {
 	return {
 		template: "{{ time }}",
@@ -27,3 +29,14 @@ topBar.directive("date", ["$interval", function($interval) {
 		}
 	};
 }]);
+
+M.Layers.TopBar = {
+	setTitle: function(title) {
+		var $scope = M.RouterUtils.getLayerScope("top-bar");
+		$scope.title = title;
+	},
+	setNowPlaying: function(nowPlaying) {
+		var $scope = M.RouterUtils.getLayerScope("top-bar");
+		$scope.nowPlaying = nowPlaying;
+	}
+};

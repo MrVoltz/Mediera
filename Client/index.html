@@ -1,30 +1,37 @@
 <!doctype html>
-<html lang="en" ng-app="medieraApp">
+<html lang="en" ng-app="mediera">
 
 <head>
 	<meta charset="utf8">
-	<title>Mediera [Loading...]</title>
+	<title ng-bind="$state.current.name">Mediera [Loading...]</title>
 
 	<script src="js/loader.js"></script>
 	<script type="text/javascript">
 		Loader.load({
 			css: [ "fonts/fonts.css", "css/app.css" ],
 			js: [
-				"bower_components/jquery/dist/jquery.js", "bower_components/moment/min/moment-with-locales.min.js", "bower_components/angular/angular.js", "bower_components/underscore/underscore-min.js",
-				"js/jquery.supremation.min.js", "js/mediera.js", "js/app.js"
+				"bower_components/jquery/dist/jquery.js",
+				"bower_components/moment/min/moment-with-locales.min.js",
+				"bower_components/angular/angular.js",
+				"bower_components/angular-ui-router/release/angular-ui-router.min.js",
+				"bower_components/underscore/underscore-min.js",
+				"js/jquery.supremation.min.js",
+
+				"js/mediera.js", "js/services.js", "js/utils.js", "js/router.js", "js/app.js"
 			],
-			layers: [ "layers/player", "layers/top-bar", "layers/main-menu", "layers/movie-view" ]
+			layers: [ "layers/player", "layers/top-bar", "layers/main-menu", "layers/movie-view", "layers/source-selector" ]
 		});
 	</script>
 </head>
 
 <body>
 
-	<div class="layer player"></div>
-	<div class="layer main-menu"></div>
-	<div class="layer movie-view"></div>
-	<div class="layer top-bar"></div>
-	
+	<div class="layer player" ui-view="playerLayer"></div>
+	<div class="layer main-menu" ui-view="mainMenuLayer"></div>
+	<div class="layer movie-view" ui-view="movieViewLayer"></div>
+	<div class="layer top-bar" ui-view="topBarLayer"></div>
+	<div class="layer source-selector" ui-view="sourceSelectorLayer"></div>
+
 </body>
 
 </html>

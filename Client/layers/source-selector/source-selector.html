@@ -1,0 +1,23 @@
+<div class="selector-modal" ng-class="{ active: showModal }">
+	<h2>Výběr zdroje</h2>
+	<table>
+		<tr class="header">
+			<th>Jméno souboru</th>
+			<th>Jazyk</th>
+			<th>Titulky</th>
+			<th>Kvalita</th>
+		</tr>
+
+		<tr ng-repeat="source in sources" ng-class="{ active: activeSource === source }">
+			<td>{{ source.fileName }}</td>
+			<td>{{ source.lang | lang }}</td>
+			<td>{{ source.subtitles | lang }}</td>
+			<td>{{ source | sourceQuality }}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="searching-sources" ng-class="{ active: showLoading }">
+	<img class="preloader" src="img/preloader-128.gif">
+	<h2>Prohledávám zdroje...</h2>
+</div>

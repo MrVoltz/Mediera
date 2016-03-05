@@ -1,13 +1,6 @@
 var mainMenu = angular.module('mainMenu', []);
 
-mainMenu.directive("mainMenu", function() {
-	return {
-		restrict: "C",
-		controller: "MainMenuCtrl"
-	};
-});
-
-mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
+Mediera.addLayerCtrl(mainMenu, function($scope) {
 	$scope.menuItems = [
 		{
 			text: "Knihovna",
@@ -35,9 +28,6 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 			subMenu: null
 		}
 	];
-
-	$scope.activeMenuItem = $scope.menuItems[0];
-	$scope.activeSubItem = $scope.activeMenuItem.subMenu ? $scope.activeMenuItem.subMenu[0] : null;
 
 	$scope.setMenuItem = function(item, subItem) {
 		if(item)
@@ -98,7 +88,10 @@ mainMenu.controller('MainMenuCtrl', ['$scope', function($scope) {
 				break;
 		}
 	});
-}]);
+
+	Mediera.Layers.TopBar.setTitle("Hlavní menu");
+	$scope.setMenuItem($scope.menuItems[0]);
+});
 
 mainMenu.directive("menuBarSlider", ["$timeout", "$window", function($timeout, $window) {
 	return function(scope, element, attr) {
@@ -108,6 +101,9 @@ mainMenu.directive("menuBarSlider", ["$timeout", "$window", function($timeout, $
 
 		function refresh() {
 			var $active = $ul.find("> li.next-active");
+
+			if(!$active.length || !$active.is(":visible"))
+				return;
 
 			$ul.find("> li.before-active").removeClass("before-active");
 			$ul.find("> li.active").removeClass("active");
@@ -133,7 +129,7 @@ mainMenu.directive("menuBarSlider", ["$timeout", "$window", function($timeout, $
 				
 				$timeout(function() {
 					$bar.removeClass("no-transition");	
-				});
+				}, 500);
 			});
 		}
 
@@ -146,6 +142,9 @@ mainMenu.directive("menuBarSlider", ["$timeout", "$window", function($timeout, $
 		angular.element($window).on("resize", function() {
 			refresh();
 		});
+
+		console.log("directive fired");
+		refresh();
     };
 }]);
 

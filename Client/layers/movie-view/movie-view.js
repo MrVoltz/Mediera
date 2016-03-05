@@ -1,21 +1,6 @@
 var movieView = angular.module('movieView', []);
 
-movieView.directive("movieView", function() {
-	return {
-		restrict: "C",
-		controller: "MovieViewCtrl",
-		link: function(scope, element, attrs) {
-			var $layer = angular.element(element);
-
-			$layer.find(".poster").one("load", function() {
-				$layer.find(".rating").width($layer.find(".poster").outerWidth());
-				$layer.find(".menu").width($layer.find(".container").outerWidth());
-			});			
-		}
-	};
-});
-
-movieView.controller("MovieViewCtrl", ['$scope', function($scope) {
+M.addLayerCtrl(movieView, function($scope) {
 	$scope.menuItems = [
 		{
 			text: "Přehrát",
@@ -26,8 +11,6 @@ movieView.controller("MovieViewCtrl", ['$scope', function($scope) {
 			urlSlug: "download"
 		}
 	];
-
-	$scope.activeMenuItem = $scope.menuItems[0];
 
 	$scope.setMenuItem = function(item) {
 		$scope.activeMenuItem = item;
@@ -54,6 +37,25 @@ movieView.controller("MovieViewCtrl", ['$scope', function($scope) {
 				$scope.setMenuItem($scope.menuItems[newIndex]);
 				$scope.$apply();
 				break;
+			case "enter":
+				$scope.handleClick($scope.activeMenuItem);
+				break;
 		}
 	});
-}]);
+
+	Mediera.Layers.TopBar.setTitle("Informace o filmu");
+	$scope.setMenuItem($scope.menuItems[0]);
+
+	$scope.handleClick = function(item) {
+		Mediera.activateLayers([ "player", "movie-view", "source-selector", "top-bar" ], "source-selector");
+	};	
+});
+
+movieView.directive("movie-view-modal", function() {
+	return function(scope, element, attrs) {
+		element.find(".poster").one("load", function() {
+			element.find(".rating").width($layer.find(".poster").outerWidth());
+			element.find(".menu").width($layer.find(".container").outerWidth());
+		});
+	};
+});

@@ -1,0 +1,92 @@
+.source-selector {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+/* table */
+
+.source-selector .selector-modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 0;
+	width: 75%;
+
+	background: rgba(0, 0, 0, 0.85);
+    padding: 35px 25px;
+
+    opacity: 0;
+    transition: opacity 0.35s linear;
+}
+
+.source-selector .selector-modal.active {
+	opacity: 1;
+}
+
+.source-selector .selector-modal h2 {
+	font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 0 0 5px 5px;
+    margin: 0 0 20px 0;
+}
+
+.source-selector .selector-modal table {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-size: 20px;
+	color: rgba(255, 255, 255, 0.7);
+	width: 100%;
+}
+
+.source-selector .selector-modal th {
+	padding: 15px 20px;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+	text-align: left;
+}
+
+.source-selector .selector-modal td {
+	padding: 15px 20px;
+}
+
+.source-selector .selector-modal tr:not(:last-of-type) td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+
+/* searching sources */
+
+.source-selector .searching-sources {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 0;
+
+	background: rgba(0, 0, 0, 0.85);
+    padding: 20px 25px;
+
+    opacity: 0;
+}
+
+.source-selector .searching-sources.active {
+	opacity: 1;
+}
+
+.source-selector .searching-sources img {
+	width: 64px;
+	height: 64px;
+	margin: 0 auto;
+	display: block;
+}
+
+.source-selector .searching-sources h2 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-size: 18px;
+	margin: 20px 15px 0;
+	color: rgba(255, 255, 255, 0.8);
+	text-align: center;
+}
